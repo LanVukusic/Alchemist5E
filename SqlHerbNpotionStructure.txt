@@ -1,0 +1,47 @@
+Herbs:
+TYPE:					NAME:			DESCRIPTION:
+______________________________________________
+(INT) UNSIGNED		id				- auto increment index
+VARCHAR(40)			name
+(INT) UNSIGNED		seasonId		- when is it available; such as summer/winter/full moon
+(INT) UNSIGNED		climateId	- such as moderate/arctic
+(INT) UNSIGNED		localeId		- where to find it; such as rural/mountain/swamp/forest/...
+(INT) UNSIGNED		rarityId		- harvest/acquire rarity
+VARCHAR(30)			cost
+TEXT					effect		- how the untreated herb effects one
+TEXT					visual		- how the herb/plant looks
+TEXT					lore			- the story behind the plant/herb if any
+VARCHAR(40)			world			- the world the story or anything else in the herb
+
+create table Herbs (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(40) NOT NULL,
+seasonId INT(6) UNSIGNED,
+climateId INT(6) UNSIGNED,
+localeId INT(6) UNSIGNED,
+rarityId INT(6) UNSIGNED,
+cost VARCHAR(30) NOT NULL,
+effect TEXT,
+visual TEXT,
+lore TEXT,
+world VARCHAR(40)
+);
+
+----------------------------------------------------------------------------------------------------------------
+
+HerbsPotions:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+(INT) UNSIGNED		herbId			- link to a harb which will link to the potion of potionId
+(INT) UNSIGNED		potionId			- link to a potion which will link to the herb of herbId
+
+create table HerbsPotions(
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+herbId INT(6) UNSIGNED,
+potionId INT(6) UNSIGNED
+);
+
+----------------------------------------------------------------------------------------------------------------
+
+
