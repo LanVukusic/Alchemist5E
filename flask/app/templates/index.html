@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='list.min.js') }}"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h2>Here be stuff </h2>
+
+<div id="potions">
+
+    <input class="search" placeholder="Search"/>
+
+    <button class="sort" data-sort="name">
+        Sort by name
+    </button>
+
+    <button class="sort" data-sort="cost">
+        Sort by cost
+    </button>
+
+    <table class="table-main">
+
+        <tr>
+            <th>Name</th>
+            <th>Cost</th>
+        </tr>
+
+        <tbody class="list">
+
+        </tbody>
+
+
+    </table>
+
+    <table class="table-navigation">
+        <tr>
+            <td>
+                <button type="button" class="jPaginateBack"></button>
+            </td>
+
+            <td>
+                <button type="button" class="jPaginateNext"></button>
+            </td>
+
+            <td>
+                <ul class="pagination"></ul>
+            </td>
+        </tr>
+    </table>
+
+</div>
+{% endblock %}
