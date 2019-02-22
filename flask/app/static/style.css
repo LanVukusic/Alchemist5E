@@ -1,33 +1,71 @@
-.table-navigation {
-  margin: 0;
-  padding: 0;
+body {
+    padding: 20px;
+}
 
-  background-color: #333333;
+h1 {
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.base-header {
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+#potions {
+    margin-left: 15vw;
+    margin-right: 15vw;
 }
 
 .table-main {
     width: 100%;
+    table-layout: fixed;
 }
 
-.pagination {
-margin: 0;
-padding: 0;
-overflow: hidden;
-list-style-type: none;
+.list {
+    text-align: left;
 }
 
-li {
-  float: left;
+.table-main tbody tr {
+    transition: background-color 0.1s ease;
 }
 
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 16px;
-  text-decoration: none;
+.table-main tbody tr:hover {
+    background-color: cornsilk;
 }
 
-li a:hover {
-  background-color: #111111;
+.spacing {
+    height: 30px;
+}
+
+.head-1 {
+    width: 70%;
+}
+
+head-2 {
+    width: 30%;
+}
+
+.pagination li {
+    display: inline-block;
+
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.table-navigation {
+    height: 30px;
+}
+
+.error {
+    margin-left: 15vw;
+    margin-right: 15vw;
 }

@@ -8,49 +8,57 @@
 {% endblock %}
 
 {% block content %}
-<h2>Here be stuff </h2>
 
 <div id="potions">
 
-    <input class="search" placeholder="Search"/>
+    <p>Welcome to D&D Alchemy! Feel free to do preety much nothing.</p>
 
-    <button class="sort" data-sort="name">
-        Sort by name
-    </button>
+    <div class="spacing"></div>
 
-    <button class="sort" data-sort="cost">
-        Sort by cost
-    </button>
+    <form class="pure-form">
 
-    <table class="table-main">
+        <label for="search">Search</label>
+        <input class="search" id="search" type="text" placeholder="Search" />
 
-        <tr>
-            <th>Name</th>
-            <th>Cost</th>
-        </tr>
+    </form>
 
-        <tbody class="list">
-
-        </tbody>
-
-
-    </table>
+    <div class="spacing"></div>
 
     <table class="table-navigation">
         <tr>
             <td>
-                <button type="button" class="jPaginateBack"></button>
+                <button type="button" class="jPaginateBack pure-button">Previous</button>
             </td>
 
             <td>
-                <button type="button" class="jPaginateNext"></button>
+                <button type="button" class="jPaginateNext pure-button">Next</button>
             </td>
 
             <td>
                 <ul class="pagination"></ul>
             </td>
+
         </tr>
     </table>
+
+    <div class="spacing"></div>
+
+    <table class="table-main pure-table">
+
+        <thead>
+            <tr>
+                <th><a data-sort="name" class="sort head-1">Name</a></th>
+                <th><a data-sort="cost" class="sort head-2">Cost</a></th>
+            </tr>
+        </thead>
+
+        <tbody class="list"></tbody>
+
+    </table>
+
+    <div class="spacing"></div>
+
+
 
 </div>
 {% endblock %}
