@@ -162,11 +162,39 @@ ___________________________________________________
 VARCHAR(30)			name				- specific symptom
 (INT) UNSIGNED		symptomId		- id of the general symtom describing this specifing one (pointing to herbalism.Symptom)
 
-CREATE TABLE Symptom (
+CREATE TABLE SpecSymptom (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(30) NOT NULL
+name VARCHAR(30) NOT NULL,
 symptomId INT(6) UNSIGNED
 );
 
 -----------------------------------------------------------------------------------------------------------------
+
+Ingestion:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(30)			name				- ingestion type
+
+CREATE TABLE Ingestion (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
