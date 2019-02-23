@@ -10,7 +10,6 @@ TYPE:					NAME:			DESCRIPTION:
 ______________________________________________
 (INT) UNSIGNED		id				- auto increment index
 VARCHAR(40)			name
-(INT) UNSIGNED		seasonId		- when is it available; such as summer/winter/full moon
 (INT) UNSIGNED		climateId	- such as moderate/arctic; using herbalism.Climate
 (INT) UNSIGNED		rarityId		- harvest/acquire rarity; using herbalism.Rarity
 (INT) UNSIGNED		ingestionId	- how to ingest the herb; using herbalism.Ingestion
@@ -181,9 +180,31 @@ id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(30) NOT NULL
 );
 
+-----------------------------------------------------------------------------------------------------------------
 
+ExpDate:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(30)			name				- expiration date
 
+CREATE TABLE ExpDate (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
 
+-----------------------------------------------------------------------------------------------------------------
+
+PotionType:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(30)			name				- type of the potion
+
+CREATE TABLE PotionType (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
 
 
 
