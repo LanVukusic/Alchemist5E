@@ -1,25 +1,33 @@
+Herbs, Potions and all connection tables suchs as HerbsPotions are in PLURAL
+All other descriptive tables such as Rarity or Season are in SINGULAR
+
+ALL tables start in upper case
+ALL COLUMNS start in lower case
+
+
 Herbs:
 TYPE:					NAME:			DESCRIPTION:
 ______________________________________________
 (INT) UNSIGNED		id				- auto increment index
 VARCHAR(40)			name
 (INT) UNSIGNED		seasonId		- when is it available; such as summer/winter/full moon
-(INT) UNSIGNED		climateId	- such as moderate/arctic
-(INT) UNSIGNED		localeId		- where to find it; such as rural/mountain/swamp/forest/...
-(INT) UNSIGNED		rarityId		- harvest/acquire rarity
+(INT) UNSIGNED		climateId	- such as moderate/arctic; using herbalism.Climate
+(INT) UNSIGNED		rarityId		- harvest/acquire rarity; using herbalism.Rarity
+(INT) UNSIGNED		ingestionId	- how to ingest the herb; using herbalism.Ingestion
 VARCHAR(30)			cost
 TEXT					effect		- how the untreated herb effects one
 TEXT					visual		- how the herb/plant looks
 TEXT					lore			- the story behind the plant/herb if any
 VARCHAR(40)			world			- the world the story or anything else in the herb
+XXX					potions*		- NOT IN TABLE - but a virtual property of a herb, meaning which potions one can brew from the herb
+XXX					seasons*		- NOT IN TABLE - such as full moon/winter/summer/... needs a link between herbalism.Seasons and herbalism.Herbs
 
 create table Herbs (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(40) NOT NULL,
-seasonId INT(6) UNSIGNED,
 climateId INT(6) UNSIGNED,
-localeId INT(6) UNSIGNED,
 rarityId INT(6) UNSIGNED,
+ingestionId INT(6) UNSIGNED,
 cost VARCHAR(30) NOT NULL,
 effect TEXT,
 visual TEXT,
@@ -38,10 +46,127 @@ ___________________________________________________
 
 create table HerbsPotions(
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-herbId INT(6) UNSIGNED,
-potionId INT(6) UNSIGNED
+herbId INT(6) UNSIGNED NOT NULL,
+potionId INT(6) UNSIGNED NOT NULL
 );
 
 ----------------------------------------------------------------------------------------------------------------
 
+Season:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(30)			name				- name of the season
+
+CREATE TABLE Season (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
+
+-----------------------------------------------------------------------------------------------------------------
+
+HerbsSeasons:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+(INT) UNSIGNED		herbId			- link to a harb which will link to the season of seasonId
+(INT) UNSIGNED		seasonId			- link to a season which will link to the herb of herbId
+
+create table HerbsSeasons (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+herbId INT(6) UNSIGNED NOT NULL,
+seasonId INT(6) UNSIGNED NOT NULL
+);
+
+-----------------------------------------------------------------------------------------------------------------
+
+Rarity:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(50)			name				- rarity
+
+CREATE TABLE Rarity (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
+
+-----------------------------------------------------------------------------------------------------------------
+Climate:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(50)			name				- climate
+
+CREATE TABLE Climite (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
+
+-----------------------------------------------------------------------------------------------------------------
+
+Potions:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(50)			name				- potion name
+(INT) UNSIGNED		cost				- numerical cost of the potion in GP (gold pieces)
+(INT) UNSIGNED		rarityId			- rarity of the potion; using herbalism.Rarity
+(INT) UNSIGNED		expDateId		- in how much time the potion expires; using herbalism.ExpDate
+(INT) UNSIGNED		typeId			- which type the potion is.. elixir/poison/...; using herbalism.PotionType
+(INT) UNSIGNED		ingestionId		- how to ingest/apply the potion; using herbalism.Ingestion
+TEXT					brewing			- how to brew the potion
+TEXT					storing			- how to store the potion (very optinal)
+TEXT					effect			- how the potion works
+TEXT					visual			- how the potion looks
+TEXT					lore				- optional lore of the potion
+TEXT					world				- the world in which it might appear
+XXX					herbs*			- from which herbs it is brewed; written in herbalism.HerbsPotions
+XXX					symptoms*		- which symtoms it causes (it can be recognised by them); written in herbalism.Symptoms (MIGHT CHANGE)
+
+create table Potions (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(40) NOT NULL,
+cost INT(6) UNSIGNED NOT NULL,
+rarityId INT(6) UNSIGNED,
+expDateId INT(6) UNSIGNED,
+typeId INT(6) UNSIGNED,
+ingestionId INT(6) UNSIGNED,
+brewing TEXT,
+storing TEXT,
+effect TEXT,
+visual TEXT,
+lore TEXT,
+world VARCHAR(40)
+);
+
+-----------------------------------------------------------------------------------------------------------------
+
+Symptom:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(30)			name				- symptom
+
+CREATE TABLE Symptom (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+);
+
+-----------------------------------------------------------------------------------------------------------------
+
+SpecSymptom:
+TYPE:					NAME:				DESCRIPTION:
+___________________________________________________
+(INT) UNSIGNED		id					- auto increment index
+VARCHAR(30)			name				- specific symptom
+(INT) UNSIGNED		symptomId		- id of the general symtom describing this specifing one (pointing to herbalism.Symptom)
+
+CREATE TABLE Symptom (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30) NOT NULL
+symptomId INT(6) UNSIGNED
+);
+
+-----------------------------------------------------------------------------------------------------------------
 
