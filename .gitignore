@@ -72,6 +72,9 @@ target/
 # pyenv
 .python-version
 
+# python project generated files
+.idea/
+
 # celery beat schedule file
 celerybeat-schedule
 
