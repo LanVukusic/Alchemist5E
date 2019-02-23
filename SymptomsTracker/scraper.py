@@ -37,9 +37,9 @@ def getSubcategoryList(link, numOfCategories = 5):
 
   return subsymptoms
 
-def startProccess(indexMn, indexMx):
+def startProccess():
     # function that starts scrapping data from downloaded site. Index is the range tha it works on.
-  for i in mydivs[indexMn:indexMx]:
+  for i in mydivs:
     for j in i.findAll("li", {"class":"bg"}):
       jsonHolder[j.text] = getSubcategoryList(j.find("a")["href"])
 
@@ -53,25 +53,5 @@ def saveJSON(name="data"):
 
 if __name__ == '__main__':
   # Setup a list of processes that we want to run
-  """ lastInedx = 0
-  workers = []
-  for i in range(WORKERS_NUM):  # code breakes if division is not perfect. if WORKERS_NUM does not devide mydivs.len entries will get skipped.
-    minInd = lastInedx
-    maxInd = (len(mydivs) // WORKERS_NUM)+lastInedx
-    workers.append(mp.Process(target=startProccess, args=(minInd, maxInd)))
-    lastInedx = maxInd
-
-    # Run processes
-  for p in workers:
-      print("worker started")
-      p.start()
-
-  # Exit the completed processes
-  for p in workers:
-      print("worker finished")
-      p.join()
-  
-  print(jsonHolder) """
-
-  startProccess(0,3)
+  startProccess()
   # saveJSON("data")
