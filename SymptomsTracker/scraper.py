@@ -6,15 +6,14 @@ import json
 from tqdm import tqdm
 from time import time
 import random
-import multiprocessing as mp
 
 # number of asynchronous threads for downloading. It is 7 because it is a devider of 28
 # - number of letters of alphabetical order, that we are parsing
-WORKERS_NUM  = 7
+WORKERS_NUM  = 1
 
 jsonHolder = {}
 
-r = requests.get('https://symptomchecker.webmd.com/symptoms-a-z#')
+r = requests.get('https://symptomchecker.webmd.com/symptoms-a-z#', verify = False)
 soup = BeautifulSoup(r.text, 'html.parser')
 regex = re.compile(r'list_.')
 mydivs = soup.findAll("div", {"id": regex})
@@ -22,8 +21,10 @@ mydivs = soup.findAll("div", {"id": regex})
 
 def getSubcategoryList(link, numOfCategories = 5):
   subsymptoms = []
-
-  r = requests.get("https://symptomchecker.webmd.com/"+link)
+  try:
+    r = requests.get("https://symptomchecker.webmd.com/"+link, verify = False)
+  except:
+    return 
   soup2 = BeautifulSoup(r.text, 'html.parser')
   mydivs = soup2.findAll("td", {"class": "bg"})
 
@@ -38,19 +39,21 @@ def getSubcategoryList(link, numOfCategories = 5):
 
 def startProccess(indexMn, indexMx):
     # function that starts scrapping data from downloaded site. Index is the range tha it works on.
-  for i in tqdm(mydivs[indexMn: indexMx]):
+  for i in mydivs[indexMn:indexMx]:
     for j in i.findAll("li", {"class":"bg"}):
       jsonHolder[j.text] = getSubcategoryList(j.find("a")["href"])
+
+  saveJSON()
 
 def saveJSON(name="data"):
   jsn = json.dumps(jsonHolder)
   with open(name+".json", 'w') as outfile:
-      outfile.write(jsn)
+    outfile.write(jsn)
 
 
 if __name__ == '__main__':
   # Setup a list of processes that we want to run
-  lastInedx = 0
+  """ lastInedx = 0
   workers = []
   for i in range(WORKERS_NUM):  # code breakes if division is not perfect. if WORKERS_NUM does not devide mydivs.len entries will get skipped.
     minInd = lastInedx
@@ -68,4 +71,7 @@ if __name__ == '__main__':
       print("worker finished")
       p.join()
   
-  saveJSON("data")
+  print(jsonHolder) """
+
+  startProccess(0,3)
+  # saveJSON("data")
