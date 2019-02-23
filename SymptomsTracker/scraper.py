@@ -36,16 +36,16 @@ def getSubcategoryList(link, numOfCategories = 5):
 
   return subsymptoms
 
-def startProccess(indexMn, indexMx, workerId):
+def startProccess(indexMn, indexMx):
     # function that starts scrapping data from downloaded site. Index is the range tha it works on.
   for i in tqdm(mydivs[indexMn: indexMx]):
     for j in i.findAll("li", {"class":"bg"}):
       jsonHolder[j.text] = getSubcategoryList(j.find("a")["href"])
-    
+
 def saveJSON(name="data"):
   jsn = json.dumps(jsonHolder)
   with open(name+".json", 'w') as outfile:
-      json.dump(jsn, outfile)
+      outfile.write(jsn)
 
 
 if __name__ == '__main__':
