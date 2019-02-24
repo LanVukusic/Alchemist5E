@@ -16,6 +16,8 @@ Some nice commands to keep in mind:
     * flask run [options: --host=0.0.0.0]
     * flask shell
     * set FLASK_DEBUG=1 [or 0]
+    * flask db migrate -m "description"
+    * flask db upgrade
 
 Default website can be found by following the provided links:
     * http://localhost:5000/index

@@ -39,3 +39,7 @@ body {
   display: flex;
   align-items: center;
 }
+
+.over-character-limit{
+    background-color: red;
+}
