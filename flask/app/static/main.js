@@ -1,5 +1,23 @@
 $(function() {
 
+    /* ######################## POPULATING THE LIST  ###################### */
+
+    function get_list_data(typeOfRequest) {
+        $.ajax({
+			url: '/_get_list_data',
+			data: JSON.stringify({ "a" : typeOfRequest } ),
+			contentType: "application/json; charset=utf-8",
+            dataType: "json",
+			type: 'POST',
+			success: function(text){
+				response = text;
+				init_list(text);
+			},
+			error: function(error){
+			}
+		})
+    }
+
      var options = {
       valueNames: [ 'name', 'cost' ],
       page: 5,
@@ -9,46 +27,24 @@ $(function() {
         right: 0,
         paginationClass: "pagination",
       },
-      // Since there are no elements in the list, this will be used as template.
       item: '<tr><th><h3 class="name"></h3></th><th><p class="cost"></p></th></tr>'
     };
 
-    var values = [
-      {
-        name: 'Elixir of Conflicts',
-        cost: 820
-      },
-      {
-        name: 'Philter of Dream Inducement',
-        cost: 120
-      },
-      {
-        name: 'Elixir of Enhanced Sleep',
-        cost: 510
-      },
-      {
-        name: 'Elixir of Enhanced Sleep',
-        cost: 20
-      },
-      {
-        name: 'Flask of the Oracle',
-        cost: 1337
-      },
-      {
-        name: 'Phial of Pain',
-        cost: 30
-      },
-      {
-        name: 'Brew of Hysteria',
-        cost: 50
-      },
-      {
-        name: 'Flask of Endless Time',
-        cost: 10
-      }
-    ];
+    /* ######################## Live exec  ###################### */
 
-    var potionList = new List('potions', options, values);
+    get_list_data(1);
+
+    var potionList;
+    var listLoaded = 0;
+
+    function init_list (values){
+        potionList = new List('potions', options, values['result']);
+
+        var listLoaded = 1;
+    }
+
+
+    /* ######################## PAGINATION FUNCTIONS  ###################### */
 
     $('.jPaginateNext').on('click', function(){
 
@@ -73,9 +69,13 @@ $(function() {
         })
     });
 
-    potionList.on('updated', function (list) {
-        $('tr').addClass('animated fadeInRight');
-    });
+    /* ######################## ANIMATIONS  ###################### */
 
+    if (listLoaded == 1){
+
+        potionList.on('updated', function (list) {
+            $('tr').addClass('animated fadeInRight');
+        });
+    }
 });
 

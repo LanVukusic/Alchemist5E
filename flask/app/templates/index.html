@@ -4,6 +4,14 @@
 
     {{ super() }}
 
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+
+    <script type="text/javascript">
+            var potions_temp = {{ potions|tojson }};
+    </script>
+
     <script src="{{ url_for('static', filename='list.min.js') }}"></script>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
 

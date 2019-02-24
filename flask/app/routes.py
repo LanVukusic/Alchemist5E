@@ -3,13 +3,48 @@ from app.forms import LoginForm, RegistrationForm
 from werkzeug.urls import url_parse
 from app.models import User
 from flask_login import current_user, login_user, logout_user
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
+
+values = [
+      {
+        "name": 'Elixir of Conflicts',
+        "cost": 820
+      },
+      {
+        "name": 'Philter of Dream Inducement',
+        "cost": 120
+      },
+      {
+        "name": 'Elixir of Enhanced Sleep',
+        "cost": 510
+      },
+      {
+        "name": 'Elixir of Enhanced Sleep',
+        "cost": 20
+      },
+      {
+        "name": 'Flask of the Oracle',
+        "cost": 1337
+      },
+      {
+        "name": 'Phial of Pain',
+        "cost": 30
+      },
+      {
+        "name": 'Brew of Hysteria',
+        "cost": 50
+      },
+      {
+        "name": 'Flask of Endless Time',
+        "cost": 10
+      }
+    ]
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home', potions=values)
 
 
 @app.route('/basicguide')
@@ -69,4 +104,15 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/_get_list_data', methods=['POST'])
+def get_list_data():
+    if request.method == 'POST':
+        a = request.get_json()
+        if a.get('a') == 1:
+            return jsonify(result=values)
+        else:
+            return jsonify("Bad request")
+
 
