@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="error">
-    <h1>WTF?</h1>
-    <p>Dude. What are you doing here? You think this a joke? You thought you can just throw errors at this website
-        and it will crash? You have seen nothing. This bad boy rocks highly efficient html marks, written on high performance
-        python that won't simply crumble under easy workloads. Now go back to index and stop complaining. Also, get bamboozled.</p>
-    <p><a class="pure-button pure-button-primary" href="{{ url_for('index') }}">Back</a></p>
-</div>
+{% block app_content %}
+
+<h1>WTF?</h1>
+<p>Dude. What are you doing here? You think this a joke? You thought you can just throw errors at this website
+    and it will crash? You have seen nothing. This bad boy rocks highly efficient html marks, written on high performance
+    python that won't simply crumble under easy workloads. Now go back to index and stop complaining. Also, get bamboozled.</p>
+<p><a href="{{ url_for('index') }}">Back</a></p>
+
 {% endblock %}

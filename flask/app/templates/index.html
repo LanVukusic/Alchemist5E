@@ -1,64 +1,68 @@
 {% extends "base.html" %}
 
-{% block head %}
-{{ super() }}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='list.min.js') }}"></script>
-<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% block scripts  %}
+
+    {{ super() }}
+
+    <script src="{{ url_for('static', filename='list.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+
 {% endblock %}
 
-{% block content %}
+{% block app_content %}
 
-<div id="potions">
+    <div id="potions">
 
-    <p>Welcome to D&D Alchemy! Feel free to do preety much nothing.</p>
+        {% if current_user.admin == True %}
+        <div class="alert alert-success" role="alert"><b>Welcome!</b> This account possesses admin privileges. Remember, with great power come zero responsibilities.</div>
+        {% else %}
+        <p>Welcome to D&D Alchemy {{ current_user.username }}! Feel free to do pretty much nothing.</p>
+        <div class="spacing"></div>
+        {% endif %}
 
-    <div class="spacing"></div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Search</span>
+          <input type="text" class="form-control search" id="search" placeholder="Search" aria-describedby="basic-addon1">
+        </div>
 
-    <form class="pure-form">
+        <div class="spacing"></div>
 
-        <label for="search">Search</label>
-        <input class="search" id="search" type="text" placeholder="Search" />
-
-    </form>
-
-    <div class="spacing"></div>
-
-    <table class="table-navigation">
-        <tr>
-            <td>
-                <button type="button" class="jPaginateBack pure-button">Previous</button>
-            </td>
-
-            <td>
-                <button type="button" class="jPaginateNext pure-button">Next</button>
-            </td>
-
-            <td>
-                <ul class="pagination"></ul>
-            </td>
-
-        </tr>
-    </table>
-
-    <div class="spacing"></div>
-
-    <table class="table-main pure-table">
-
-        <thead>
+        <table class="table-navigation">
             <tr>
-                <th><a data-sort="name" class="sort head-1">Name</a></th>
-                <th><a data-sort="cost" class="sort head-2">Cost</a></th>
+                <td>
+                    <button type="button" class="jPaginateBack btn btn-primary custom-margin"> Previous </button>
+                </td>
+
+                <td>
+                    <button type="button" class="jPaginateNext btn btn-primary custom-margin"> Next </button>
+                </td>
+
+                <td>
+                    <nav aria-label="Page navigation custom-margin">
+                        <ul class="pagination custom-pagination"></ul>
+                    </nav>
+                </td>
+
             </tr>
-        </thead>
+        </table>
 
-        <tbody class="list"></tbody>
+        <div class="spacing"></div>
 
-    </table>
+        <table class="table-main">
 
-    <div class="spacing"></div>
+            <thead>
+                <tr>
+                    <th><a data-sort="name" class="sort">Name</a></th>
+                    <th><a data-sort="cost" class="sort">Cost</a></th>
+                </tr>
+            </thead>
 
+            <tbody class="list"></tbody>
 
+        </table>
 
-</div>
+        <div class="spacing"></div>
+
+    </div>
+
 {% endblock %}

@@ -1,19 +1,7 @@
 body {
-    padding: 20px;
-}
-
-h1 {
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.base-header {
-    margin-left: 15vw;
-    margin-right: 15vw;
-}
-
-#potions {
-    margin-left: 15vw;
-    margin-right: 15vw;
+    padding: 10px;
+    background-image: url("geometry.png");
+    background-color: #cccccc;
 }
 
 .table-main {
@@ -21,51 +9,33 @@ h1 {
     table-layout: fixed;
 }
 
-.list {
-    text-align: left;
-}
-
 .table-main tbody tr {
     transition: background-color 0.1s ease;
 }
 
 .table-main tbody tr:hover {
-    background-color: cornsilk;
+    background-color: rgba(63, 127, 191, 0.26);
 }
 
 .spacing {
     height: 30px;
 }
 
-.head-1 {
-    width: 70%;
+.custom-pagination{
+    display: inline;
 }
 
-head-2 {
-    width: 30%;
-}
-
-.pagination li {
-    display: inline-block;
-
-
-    margin-left: 10px;
+.custom-margin {
     margin-right: 10px;
-
 }
 
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
+.sign-in-spacing {
+    height: 7px;
 }
 
-.table-navigation {
-    height: 30px;
-}
-
-.error {
-    margin-left: 15vw;
-    margin-right: 15vw;
+.vertical-center {
+  min-height: 70%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 70vh; /* These two lines are counted as one 🙂       */
+  display: flex;
+  align-items: center;
 }

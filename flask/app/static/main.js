@@ -73,5 +73,9 @@ $(function() {
         })
     });
 
+    potionList.on('updated', function (list) {
+        $('tr').addClass('animated fadeInRight');
+    });
+
 });
 
