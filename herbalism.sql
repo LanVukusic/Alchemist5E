@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Climite`
+-- Table structure for table `Climate`
 --
 
-DROP TABLE IF EXISTS `Climite`;
+DROP TABLE IF EXISTS `Climate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Climite` (
+CREATE TABLE `Climate` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
@@ -30,12 +30,12 @@ CREATE TABLE `Climite` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Climite`
+-- Dumping data for table `Climate`
 --
 
-LOCK TABLES `Climite` WRITE;
-/*!40000 ALTER TABLE `Climite` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Climite` ENABLE KEYS */;
+LOCK TABLES `Climate` WRITE;
+/*!40000 ALTER TABLE `Climate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Climate` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -79,7 +79,13 @@ CREATE TABLE `Herbs` (
   `visual` text,
   `lore` text,
   `world` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `climateId` (`climateId`),
+  KEY `rarityId` (`rarityId`),
+  KEY `ingestionId` (`ingestionId`),
+  CONSTRAINT `Herbs_ibfk_1` FOREIGN KEY (`climateId`) REFERENCES `Climate` (`id`),
+  CONSTRAINT `Herbs_ibfk_2` FOREIGN KEY (`rarityId`) REFERENCES `Rarity` (`id`),
+  CONSTRAINT `Herbs_ibfk_3` FOREIGN KEY (`ingestionId`) REFERENCES `Ingestion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,7 +109,11 @@ CREATE TABLE `HerbsPotions` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `herbId` int(6) unsigned NOT NULL,
   `potionId` int(6) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `herbId` (`herbId`),
+  KEY `potionId` (`potionId`),
+  CONSTRAINT `HerbsPotions_ibfk_1` FOREIGN KEY (`herbId`) REFERENCES `Herbs` (`id`),
+  CONSTRAINT `HerbsPotions_ibfk_2` FOREIGN KEY (`potionId`) REFERENCES `Potions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -127,7 +137,11 @@ CREATE TABLE `HerbsSeasons` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `herbId` int(6) unsigned NOT NULL,
   `seasonId` int(6) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `herbId` (`herbId`),
+  KEY `seasonId` (`seasonId`),
+  CONSTRAINT `HerbsSeasons_ibfk_1` FOREIGN KEY (`herbId`) REFERENCES `Herbs` (`id`),
+  CONSTRAINT `HerbsSeasons_ibfk_2` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -207,7 +221,18 @@ CREATE TABLE `Potions` (
   `visual` text,
   `lore` text,
   `world` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `symptomId` int(6) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rarityId` (`rarityId`),
+  KEY `expDateId` (`expDateId`),
+  KEY `typeId` (`typeId`),
+  KEY `ingestionId` (`ingestionId`),
+  KEY `symptomId` (`symptomId`),
+  CONSTRAINT `Potions_ibfk_1` FOREIGN KEY (`rarityId`) REFERENCES `Rarity` (`id`),
+  CONSTRAINT `Potions_ibfk_2` FOREIGN KEY (`expDateId`) REFERENCES `ExpDate` (`id`),
+  CONSTRAINT `Potions_ibfk_3` FOREIGN KEY (`typeId`) REFERENCES `PotionType` (`id`),
+  CONSTRAINT `Potions_ibfk_4` FOREIGN KEY (`ingestionId`) REFERENCES `Ingestion` (`id`),
+  CONSTRAINT `Potions_ibfk_5` FOREIGN KEY (`symptomId`) REFERENCES `SpecSymptom` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -277,7 +302,9 @@ CREATE TABLE `SpecSymptom` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `symptomId` int(6) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `symptomId` (`symptomId`),
+  CONSTRAINT `SpecSymptom_ibfk_1` FOREIGN KEY (`symptomId`) REFERENCES `Symptom` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -322,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-23 23:51:09
+-- Dump completed on 2019-02-25 21:25:30
