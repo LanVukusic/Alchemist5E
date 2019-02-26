@@ -21,5 +21,9 @@ $(function() {
     $("#description").on('input',function(){
         CharCount();
     });
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
 });
 

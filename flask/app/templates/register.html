@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
-<!-- Look into forms.py for explanation. -->
+
+{% block scripts  %}
+
+    {{ super() }}
+
+    <script src="{{ url_for('static', filename='register.js') }}"></script>
+
+{% endblock %}
 
 {% block app_content %}
     <div class="container-fluid vertical-center">
@@ -24,74 +31,43 @@
                       {% endif %}
                     {% endwith %}
 
-                    <form action="" method="post" novalidate>
+                    <form action="" method="post" class="form" novalidate>
 
                         {{form.hidden_tag()}}
 
-                        <!-- ################################### Username field -->
-
-                        <div class="input-group">
+                        <div class="form-group input-group {% if form.username.errors|length > 0 %} has-error has-feedback {% endif %}">
                             <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                            <input type="text" placeholder="Username" class="form-control" name="username" size="32" value="{{request.form.username }}" aria-describedby="sizing-addon1">
+                            <input type="text" placeholder="Username" class="form-control" name="username" size="32"
+                                   value="{{request.form.username }}" aria-describedby="sizing-addon1" data-toggle="tooltip"
+                                   data-placement="bottom" data-html="true"
+                                   title="{% for error in form.username.errors %}{{ error }}{% endfor %}">
                         </div>
 
-                        <div class="sign-in-spacing"></div>
-
-                        {% for error in form.username.errors %}
-                            <div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>{{ error }}</div>
-                        {% endfor %}
-
-                        <div class="sign-in-spacing"></div>
-
-                        <!-- ################################### Email -->
-
-                        <div class="input-group">
+                        <div class="form-group input-group {% if form.email.errors|length > 0 %} has-error has-feedback {% endif %}">
                             <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                            <input type="text" placeholder="Email" class="form-control" name="email" size="64" value="{{request.form.email }}" aria-describedby="sizing-addon1">
+                            <input type="text" placeholder="Email" class="form-control" name="email" size="64"
+                                   value="{{request.form.email }}" aria-describedby="sizing-addon1"data-toggle="tooltip"
+                                   data-placement="bottom" data-html="true"
+                                   title="{% for error in form.email.errors %}{{ error }}{% endfor %}">
                         </div>
 
-                        <div class="sign-in-spacing"></div>
-
-                        {% for error in form.email.errors %}
-                            <div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>{{ error }}</div>
-                        {% endfor %}
-
-                        <div class="sign-in-spacing"></div>
-
-                        <!-- ################################### Password -->
-
-                        <div class="input-group">
+                        <div class="form-group input-group {% if form.password.errors|length > 0 %} has-error has-feedback {% endif %}">
                             <span class="input-group-addon" id="sizing-addon3"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                            <input type="password" placeholder="Password" class="form-control" name="password" size="32" value="{{request.form.password }}" aria-describedby="sizing-addon1">
+                            <input type="password" placeholder="Password" class="form-control" name="password" size="32"
+                                   value="{{request.form.password }}" aria-describedby="sizing-addon1" data-toggle="tooltip"
+                                   data-placement="bottom" data-html="true"
+                                   title="{% for error in form.password.errors %}{{ error }}{% endfor %}">
                         </div>
 
-                        <div class="sign-in-spacing"></div>
-
-                        {% for error in form.password.errors %}
-                            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>{{ error }}</div>
-                        {% endfor %}
-
-                        <div class="sign-in-spacing"></div>
-
-                        <!-- ################################### Password repeat-->
-
-                        <div class="input-group">
+                        <div class="form-group input-group {% if form.password2.errors|length > 0 %} has-error has-feedback {% endif %}">
                             <span class="input-group-addon" id="sizing-addon4"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                            <input type="password2" placeholder="Password" class="form-control" name="password2" size="32" value="{{request.form.password2 }}" aria-describedby="sizing-addon1">
+                            <input type="password2" placeholder="Password" class="form-control" name="password2" size="32"
+                                   value="{{request.form.password2 }}" aria-describedby="sizing-addon1" data-toggle="tooltip"
+                                   data-placement="bottom" data-html="true"
+                                   title="{% for error in form.password2.errors %}{{ error }}{% endfor %}">
                         </div>
 
-                        <div class="sign-in-spacing"></div>
-
-                        {% for error in form.password2.errors %}
-                            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>{{ error }}</div>
-                        {% endfor %}
-
-                        <div class="sign-in-spacing"></div>
-
-
-                        <!-- ################################### Submit button-->
-
-                        <input class="btn btn-default" type="submit" value="Login">
+                        <input class="btn btn-default" type="submit" value="Register">
 
                     </form>
                 </div>

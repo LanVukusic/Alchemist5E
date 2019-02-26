@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
-<!-- Look into forms.py for explanation. -->
+{% block scripts  %}
+
+    {{ super() }}
+
+    <script src="{{ url_for('static', filename='register.js') }}"></script>
+
+{% endblock %}
+
 
 {% block app_content %}
     <div class="container-fluid vertical-center">
@@ -19,40 +26,30 @@
                     {% with messages = get_flashed_messages() %}
                       {% if messages %}
                         {% for message in messages %}
-                    <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> {{ message }}</div>
+                            <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> {{ message }}</div>
                         {% endfor %}
                       {% endif %}
                     {% endwith %}
 
-                    <form action="" method="post" novalidate>
+                    <form action="" method="post" novalidate class="form">
 
                         {{form.hidden_tag()}}
 
-                        <div class="input-group">
+                        <div class="form-group input-group {% if form.username.errors|length > 0 %} has-error has-feedback {% endif %}">
                             <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                            <input type="text" placeholder="Username" class="form-control" name="username" size="32" value="{{request.form.username }}" aria-describedby="sizing-addon1">
+                            <input type="text" placeholder="Username" class="form-control" name="username" size="32"
+                                   value="{{request.form.username }}" aria-describedby="sizing-addon1" data-toggle="tooltip"
+                                   data-placement="bottom" data-html="true"
+                                   title="{% for error in form.username.errors %}{{ error }}{% endfor %}">
                         </div>
 
-                        <div class="sign-in-spacing"></div>
-
-                        {% for error in form.username.errors %}
-                            <div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>{{ error }}</div>
-                        {% endfor %}
-
-                        <div class="sign-in-spacing"></div>
-
-                        <div class="input-group">
+                        <div class="form-group input-group {% if form.password.errors|length > 0 %} has-error has-feedback {% endif %}">
                             <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                            <input type="password" placeholder="Password" class="form-control" name="password" size="32" value="{{request.form.password }}" aria-describedby="sizing-addon1">
+                            <input type="password" placeholder="Password" class="form-control" name="password" size="32"
+                                   value="{{request.form.password }}" aria-describedby="sizing-addon1" data-toggle="tooltip"
+                                   data-placement="bottom" data-html="true"
+                                   title="{% for error in form.password.errors %}{{ error }}{% endfor %}">
                         </div>
-
-                        <div class="sign-in-spacing"></div>
-
-                        {% for error in form.password.errors %}
-                            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>{{ error }}</div>
-                        {% endfor %}
-
-                        <div class="sign-in-spacing"></div>
 
                         <p>{{ form.remember_me()}} {{form.remember_me.label}}</p>
 

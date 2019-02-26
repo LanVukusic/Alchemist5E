@@ -52,10 +52,10 @@ def basicguide():
     return render_template('basicguide.html')
 
 
-@app.route('/potionedit')
+@app.route('/herbeditor')
 @login_required
-def potionedit():
-    return render_template('potionedit.html')
+def herbeditor():
+    return render_template('herbeditor.html')
 
 
 @app.route('/logout')
