@@ -2,17 +2,22 @@ from service import *
 from service import DataBase
 import json
 
-x = DbConnection.DbConnection.getConnection()
+db = DataBase.Database()
 
-print(x)
+db.writeHerbs(
+    [
+        "namee",
+        1,
+        3,
+        1,
+        "loree"
+    ]
+)
 
-y = DbConnection.DbConnection.getConnection()
+data = DataBase.ReadData()
 
-print(y)
 
-z = DataBase.HerbData()
+data.read
 
-for i in z.readAll():
-    print(i)
-
-print(json.dumps(z.readAll()))
+test = data.readAllAny("Climate")
+print(test)
