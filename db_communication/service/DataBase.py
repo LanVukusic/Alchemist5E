@@ -1,6 +1,6 @@
 from service import DbConnection
 from objects import Herb
-
+from objects import Potion
 
 class HerbData(object):
     con = None
@@ -16,7 +16,7 @@ class HerbData(object):
         #returns a list of tuplets:
         #(it can be converted to json with (import..) json.dumps(<a list of tuplets>)
 
-class Database:
+class writeData:
     con = None;
     crs = None;
 
@@ -87,6 +87,46 @@ class ReadData:
             x.potions = self.readConnection("HerbsPotions", "herbId", x.id, "potionId")
             herbList.append(x)
         return herbList
+
+    def readAllPotions(self):
+        listP = self.readAllAny("Potions")
+        potionList = list()
+
+        for potion in listP:
+            x = Potion.Potion()
+            x.id = int(potion[0])
+            x.name = potion[1]
+            x.cost = potion[2]
+
+            x.rarity = 0
+            if(potion[3] is not None):
+                x.rarity = int(potion[3])
+
+            x.expDate = 0
+            if(potion[4] is not None):
+                x.expDate = int(potion[4])
+
+            x.type = 0
+            if(potion[5] is not None):
+                x.type = int(potion[5])
+
+            x.ingestion = 0
+            if(potion[6] is not None):
+                x.ingestion = int(potion[6])
+
+            x.brewing = potion[7]
+            x.storing = potion[8]
+            x.effect = potion[9]
+            x.visual = potion[10]
+            x.lore = potion[11]
+            x.world = potion[12]
+
+            x.symptom = None
+            if potion[13] is not None:
+                x.symptom = potion[13]
+            x.herbs = self.readConnection("HerbsPotions", "potionId", x.id, "herbId")
+            potionList.append(x)
+        return potionList
 
     def readConnection(self, connection, purpose, purposeId, property):
         '''

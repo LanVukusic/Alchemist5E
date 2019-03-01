@@ -26,7 +26,7 @@ CREATE TABLE `Climate` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,6 +35,7 @@ CREATE TABLE `Climate` (
 
 LOCK TABLES `Climate` WRITE;
 /*!40000 ALTER TABLE `Climate` DISABLE KEYS */;
+INSERT INTO `Climate` VALUES (1,'test'),(2,'test2'),(3,'test2'),(4,'test2'),(5,'test2'),(6,'t'),(7,'e'),(8,'s'),(9,'t'),(10,'test'),(11,'test'),(12,'asd'),(13,'aaa'),(14,'asd'),(15,'asd'),(16,'asddrgf'),(17,'aaa'),(18,'asd'),(19,'asd'),(20,'asddrgf'),(21,'aaa'),(22,'aaa'),(23,'a'),(24,'a'),(25,'a'),(26,'aaa'),(27,'aaa'),(28,'asdasd'),(29,'dffgb'),(30,'aaax'),(31,'aaax'),(32,'aaax'),(33,'aaax'),(34,'nameeclim');
 /*!40000 ALTER TABLE `Climate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +75,7 @@ CREATE TABLE `Herbs` (
   `climateId` int(6) unsigned DEFAULT NULL,
   `rarityId` int(6) unsigned DEFAULT NULL,
   `ingestionId` int(6) unsigned DEFAULT NULL,
-  `cost` varchar(30) NOT NULL,
+  `cost` int(6) DEFAULT NULL,
   `effect` text,
   `visual` text,
   `lore` text,
@@ -86,7 +87,7 @@ CREATE TABLE `Herbs` (
   CONSTRAINT `Herbs_ibfk_1` FOREIGN KEY (`climateId`) REFERENCES `Climate` (`id`),
   CONSTRAINT `Herbs_ibfk_2` FOREIGN KEY (`rarityId`) REFERENCES `Rarity` (`id`),
   CONSTRAINT `Herbs_ibfk_3` FOREIGN KEY (`ingestionId`) REFERENCES `Ingestion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +96,7 @@ CREATE TABLE `Herbs` (
 
 LOCK TABLES `Herbs` WRITE;
 /*!40000 ALTER TABLE `Herbs` DISABLE KEYS */;
+INSERT INTO `Herbs` VALUES (2,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(3,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(4,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(5,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(6,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(7,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(8,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(9,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(10,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(11,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(12,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(13,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(14,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(15,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(16,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(17,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(18,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(19,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(20,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(21,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(22,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL),(23,'namee',1,NULL,1,3,NULL,NULL,'loree',NULL);
 /*!40000 ALTER TABLE `Herbs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +144,7 @@ CREATE TABLE `HerbsSeasons` (
   KEY `seasonId` (`seasonId`),
   CONSTRAINT `HerbsSeasons_ibfk_1` FOREIGN KEY (`herbId`) REFERENCES `Herbs` (`id`),
   CONSTRAINT `HerbsSeasons_ibfk_2` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +153,7 @@ CREATE TABLE `HerbsSeasons` (
 
 LOCK TABLES `HerbsSeasons` WRITE;
 /*!40000 ALTER TABLE `HerbsSeasons` DISABLE KEYS */;
+INSERT INTO `HerbsSeasons` VALUES (3,2,1),(4,2,2);
 /*!40000 ALTER TABLE `HerbsSeasons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +168,7 @@ CREATE TABLE `Ingestion` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,6 +177,7 @@ CREATE TABLE `Ingestion` (
 
 LOCK TABLES `Ingestion` WRITE;
 /*!40000 ALTER TABLE `Ingestion` DISABLE KEYS */;
+INSERT INTO `Ingestion` VALUES (1,'nameeclim');
 /*!40000 ALTER TABLE `Ingestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +283,7 @@ CREATE TABLE `Season` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,6 +292,7 @@ CREATE TABLE `Season` (
 
 LOCK TABLES `Season` WRITE;
 /*!40000 ALTER TABLE `Season` DISABLE KEYS */;
+INSERT INTO `Season` VALUES (1,'sesaon1'),(2,'season2');
 /*!40000 ALTER TABLE `Season` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,4 +354,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-25 21:25:30
+-- Dump completed on 2019-03-01 14:15:20
