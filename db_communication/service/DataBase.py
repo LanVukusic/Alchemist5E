@@ -58,6 +58,7 @@ class WriteData:
         self.con.commit()
         herbId = self.crs.lastrowid
             # these should always come in ids, if potion does not yet exists, user should (if he wants) create one and set it's herb properties
+            # aka user should not even have an option to write a non existant potion name, thus should only be able to select potions
         self.writeConnection("HerbsSeasons", herbId, seasons)
         self.writeConnection("HerbsPotions", herbId, potions)
 
