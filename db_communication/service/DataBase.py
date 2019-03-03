@@ -38,9 +38,11 @@ class WriteData:
             world = None,
             seasons = list(),
             potions = list()
-    ): #JUST FOR TEST INSERTING
+    ):
         pr = ReadData() # property reader
-
+        #
+        # setting the idProperties:
+        #
         if climate is not int:
             if climate is not None:
                 climate = pr.readPropId("Climate", climate)
@@ -50,15 +52,24 @@ class WriteData:
         if ingestion is not int:
             if ingestion is not None:
                 ingestion = pr.readPropId("Ingestion", ingestion)
-
+        #
+        # running querry:
+        #
         sql = "INSERT INTO Herbs (name, climateId, rarityId, ingestionId, cost, effect, visual, lore, world) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         print([name, climate, rarity, ingestion, cost, effect, visual, lore, world])
         val = (name, climate, rarity, ingestion, cost, effect, visual, lore, world)
         self.crs.execute(sql, val)
         self.con.commit()
         herbId = self.crs.lastrowid
-            # these should always come in ids, if potion does not yet exists, user should (if he wants) create one and set it's herb properties
-            # aka user should not even have an option to write a non existant potion name, thus should only be able to select potions
+        #
+        # setting and writing connections:
+        #
+        for i in range(len(seasons)): #makes sure that if element of a seasons list is not an int creates a new property and writes it's id
+            if not isinstance(seasons[i], int):
+                seasons[i] = pr.readPropId("Season", seasons[i])
+
+            # potions should always come in ids, if potion does not yet exists, user should (if he wants) create one and set it's herb properties
+            # aka user should not even have an option to write a non existant potion name, thus should only be able to select existing potions
         self.writeConnection("HerbsSeasons", herbId, seasons)
         self.writeConnection("HerbsPotions", herbId, potions)
 
@@ -66,7 +77,7 @@ class WriteData:
         sql = "INSERT INTO {table} VALUES (%s, %s, %s)".format(table = table, fId = firstId, sId = secId)
         val = [(None,firstId, x) for x in secId]
         self.crs.executemany(sql, val)
-        self.con.commit();
+        self.con.commit()
 
     def writeProp(self, table: str, property: str):
         sql = "INSERT INTO {table} VALUES (default, %s)".format(table = table)

@@ -5,7 +5,8 @@ from service import DataBase
 
 wd = DataBase.WriteData()
 
-potions = [1, 2, 3]
+potions = [1, "haha", 3]
+
 
 wd.writeHerb(
     "writTest",
@@ -17,6 +18,6 @@ wd.writeHerb(
     "visuale",
     "loree",
     None,
-    [],
+    ["season2", 5],
     []
 )
