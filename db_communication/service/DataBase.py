@@ -2,13 +2,13 @@ from service import DbConnection
 from objects import Herb
 from objects import Potion
 
-class HerbData(object):
+class Data(object):
     con = None
     crs = None
 
     def __init__(self):
         self.con = DbConnection.DbConnection.getConnection()
-        crs = self.con.cursor()
+        self.crs = self.con.cursor()
 
     def readAll(self):
         self.crs.execute("SELECT * FROM Herbs")
@@ -16,47 +16,83 @@ class HerbData(object):
         #returns a list of tuplets:
         #(it can be converted to json with (import..) json.dumps(<a list of tuplets>)
 
-class writeData:
-    con = None;
-    crs = None;
+class WriteData:
+    con = None
+    crs = None
 
     def __init__(self):
         self.con = DbConnection.DbConnection.getConnection()
         self.crs = self.con.cursor()
         #print(self.con)
 
-    def writeToOneLine(self, table, data):
-        '''
-        This can only be used for tables with only (id, name) thus the property tables:
-            Climate, ExpDate, Ingestion, PotionType, Rarity, Season, Symptom
-        :param table: to be inserted into
-        :param list: a list of names to be inserted
-        :return:
-        '''
+    def writeHerb(
+            self,
+            name: str,
+            cost: int,
+            climate = None,
+            rarity = None,
+            ingestion = None,
+            effect = None,
+            visual = None,
+            lore = None,
+            world = None,
+            seasons = list(),
+            potions = list()
+    ): #JUST FOR TEST INSERTING
+        pr = ReadData() # property reader
 
-        list = SqlList.getList(SqlList, data)
+        if climate is not int:
+            if climate is not None:
+                climate = pr.readPropId("Climate", climate)
+        if rarity is not int:
+            if rarity is not None:
+                rarity = pr.readPropId("Rarity", rarity)
+        if ingestion is not int:
+            if ingestion is not None:
+                ingestion = pr.readPropId("Ingestion", ingestion)
 
-        sql = "INSERT INTO {s} (name) VALUES (%s)".format(s = table)
-        val = [data]
+        sql = "INSERT INTO Herbs (name, climateId, rarityId, ingestionId, cost, effect, visual, lore, world) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        print([name, climate, rarity, ingestion, cost, effect, visual, lore, world])
+        val = (name, climate, rarity, ingestion, cost, effect, visual, lore, world)
         self.crs.execute(sql, val)
         self.con.commit()
-        print(self.crs.rowcount)
+        herbId = self.crs.lastrowid
+            # these should always come in ids, if potion does not yet exists, user should (if he wants) create one and set it's herb properties
+        self.writeConnection("HerbsSeasons", herbId, seasons)
+        self.writeConnection("HerbsPotions", herbId, potions)
 
-    def writeHerbs(self, data): #JUST FOR TEST INSERTING
-        sql = "INSERT INTO Herbs (name, climateId, cost, ingestionId, lore) VALUES (%s, %s, %s, %s, %s)"
-        val = data
+    def writeConnection(self, table, firstId, secId):
+        sql = "INSERT INTO {table} VALUES (%s, %s, %s)".format(table = table, fId = firstId, sId = secId)
+        val = [(None,firstId, x) for x in secId]
+        self.crs.executemany(sql, val)
+        self.con.commit();
+
+    def writeProp(self, table: str, property: str):
+        sql = "INSERT INTO {table} VALUES (default, %s)".format(table = table)
+        val = [property]
         self.crs.execute(sql, val)
         self.con.commit()
-        print(self.crs.rowcount)
+        return self.crs.lastrowid
 
 class ReadData:
     con = None;
     crs = None;
+    write = WriteData()
 
     def __init__(self):
         self.con = DbConnection.DbConnection.getConnection()
         self.crs = self.con.cursor()
         #print(self.con)
+
+    def readPropId(self, table, componentName):
+        #comparison is case INSENSITIVE (so if a user writes an already existant season but different case it actually handles it as existant)
+        querry = "SELECT id FROM {t} WHERE name = '{n}'".format(t = table, n = componentName)
+        self.crs.execute(querry)
+        fetch = [item[0] for item in self.crs.fetchall()]
+        if len(fetch) is not 0: #this should always be either 1 or 0 (if it is higher there are duplicates in the database(this bad))
+            return fetch[0]
+        else:
+            return self.write.writeProp(table, componentName)
 
     def readAllHerbs(self):
         listH = self.readAllAny("Herbs")

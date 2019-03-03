@@ -3,7 +3,20 @@ from service import DataBase
 
 
 
-data = DataBase.ReadData()
+wd = DataBase.WriteData()
 
-test = data.readAllPotions()
-print(test)
+potions = [1, 2, 3]
+
+wd.writeHerb(
+    "writTest",
+    5,
+    "xxxxx",
+    "haba",
+    "alsdfkj",
+    "effect",
+    "visuale",
+    "loree",
+    None,
+    [],
+    []
+)
